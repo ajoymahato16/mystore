@@ -1,0 +1,44 @@
+<header
+    class="line-b fixed inset-x-0 top-0 z-20 flex h-14 items-center justify-between bg-white px-4 after:-bottom-px sm:px-6">
+  
+    <div class="@container flex flex-1 justify-start pl-8">
+        <a 
+         class="shrink-0 flex flex-nowrap items-center gap-2 rounded-full px-3 py-2 text-xs/4 whitespace-nowrap ring ring-gray-950/8 hover:bg-gray-950/2 hover:ring-gray-950/10 @max-[22rem]:hidden"
+         aria-label="Home" 
+         routerLink="/" routerLinkActive="router-link-active" >
+            site_logo
+         </a>
+           
+        </div>
+    <div class="flex items-center gap-5 max-md:hidden lg:gap-6">
+      
+            <a routerLinkActive="rounded-full px-2.5 py-0.5 bg-gray-950 font-medium text-white" 
+            class="  text-sm/6 text-gray-950"  routerLink="/about">About</a>
+
+            <a routerLinkActive="rounded-full px-2.5 py-0.5 bg-gray-950 font-medium text-white" 
+            class=" text-sm/6 text-gray-950" routerLink="/product">Product</a>
+
+            <a class="text-sm/6 text-gray-950"
+            routerLink="contact"
+            routerLinkActive="rounded-full px-2.5 py-0.5 bg-gray-950 font-medium text-white"
+            >Contact</a>
+
+            <div class="h-6 w-px bg-gray-950/10"></div>
+                    {{isloggedin$ | async}}
+                    <ng-container  *ngIf="isloggedin$ | async as loggedIn">
+                        <a class="text-sm/6 text-gray-950" routerLink="/profile">Profile</a>
+                        <a class="text-sm/6 text-gray-950" (click)="loggedout()">Logout</a>    
+                    </ng-container>
+                    <ng-container  *ngIf="!(isloggedin$ | async)">
+                        <a class="text-sm/6 text-gray-950"  data-modal-target="authentication-modal" (click)="showModal()" data-modal-toggle="authentication-modal">Sign in</a>
+                    </ng-container>
+            
+    </div>
+    
+</header>
+<div #authenticationModal tabindex="-1" class="overflow-y-auto dark:bg-gray-700 overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full  hidden">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <app-login (closePopup)="hideLoginPopup()" (loginSuccess)="onLoginSuccess()"></app-login>
+    </div>
+</div>
+<div #loginModalOverlay class="bg-gray-900/50 dark:bg-gray-900/80  inset-0 z-40  fixed hidden"></div>
