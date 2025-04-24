@@ -18,10 +18,6 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       ReactiveFormsModule,
       NgxsReduxDevtoolsPluginModule.forRoot(),  // Optional: for Redux DevTools
-      NgxsStoragePluginModule.forRoot({
-        keys: ['user'],                 // The state keys you want to persist
-        storage: sessionStorage as unknown as StorageOption // or 'localStorage' for persistence across sessions
-      })
     ),
 
     provideZoneChangeDetection({ eventCoalescing: true }),
