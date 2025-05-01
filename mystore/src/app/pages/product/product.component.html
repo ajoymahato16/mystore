@@ -1,40 +1,50 @@
 <div class="bg-white">
-    <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-      <h2 class="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
+  <h2 class="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
+    <div class="mx-auto flex  justify-center max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+     
 
 
       <!-- pagination-->
   
-      <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-        <div *ngif="(products$ | async) as products">
+     
+        <div *ngIf="(product$ | async) as products">
 
-            <button (click)="prevPage()">Previous</button>
-              <span>Page {{ page }}</span>
-            <button (click)="nextPage()">Next</button>
-            <div *ngif="products.lenth>0; else  noData">            
+          <div class="flex flex-row items-end border-b-blue-900 border-b-2 pb-20">
+              <button (click)="prevPage()">Previous</button>
+                <span>Page {{ page }}</span>
+              <button (click)="nextPage()">Next</button>
+          </div>
+           
+          
+          <div  *ngIf="products.length>0; else  noData" class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+             
               <div *ngFor="let product of products" class="group relative">
-                <img src="{{product.imageUrl}}" alt=" {{product.name}}" class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80">
-                <div class="mt-4 flex justify-between">
+                <img src="{{product.thumbnail}}" alt=" {{product.title}}" class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80">
+                <div class="mt-4 flex flex-col justify-between">
                   <div>
                     <h3 class="text-sm text-gray-700">
-                      <a href="#">
+                      <a [routerLink]="['/products', product.id]">
                         <span aria-hidden="true" class="absolute inset-0"></span>
-                        {{product.name}}
+                        {{product.title}}
                       </a>
                     </h3>
-                    <p class="mt-1 text-sm text-gray-500">{{product.description}}</p>
+                    
                   </div>
-                  <p class="text-sm font-medium text-gray-900">{{product.price}}</p>
+                  <p class="mt-1 text-sm text-gray-500 pb-5">{{product.description}}</p>
+                  
+                  <p class="text-sm font-medium text-gray-900">Price : {{product.price}}</p>
                 </div>
               </div>
 
-            </div> 
+
+          </div>
+          
           </div>
         
         <ng-template #noData>
           <p>No products found.</p>
         </ng-template>
         <!-- More products... -->
-      </div>
+   
     </div>
   </div>

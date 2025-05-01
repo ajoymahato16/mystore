@@ -14,19 +14,20 @@ import { response } from 'express';
 export interface Product {
 
     id: number;
-    name: string;
+    title: string;
     price: number;
     description: string;
-    imageUrl: string;
+    thumbnail: string;
     instock: boolean;
 }
 //////////////////
 // 2. Product State Model
 //////////////////
 export interface ProductStateModel {
-    productList: Product[];
+    productList: { [page: number]: Product[] };
     selectedProductId: number | null;
     loading: boolean;
+    currentPage: number; // ← Add this
 }
 
 ///////////////////////////////////////
@@ -58,9 +59,10 @@ export class ClearSelectedProduct {
 /////////////////////////////
 
 const initialState: ProductStateModel = {
-    productList: [],
+    productList: {},
     selectedProductId: null,
     loading: false,
+    currentPage: 1,
 };
 
 
@@ -84,36 +86,43 @@ export class ProductState {
     // 6. Selectors
     @Selector()
     static getProductList(state: ProductStateModel): Product[] {
-        return state.productList;
+        if (!state || !state.productList) return []; // ✅ Prevent error on initial load
+        const  currentPage = Object.keys(state.productList).length > 0 ? Math.max(...Object.keys(state.productList).map(Number)) :0;
+        return state.productList[currentPage] || [];
     }
+
     @Selector()
     static getSelectedProductId(state: ProductStateModel): number | null {
         return state.selectedProductId;
     }
-    @Selector()
-    static updateProductList(state: ProductStateModel): Product[] {
-        return state.productList.map((product) => {
-            if (product.id === state.selectedProductId) {
-                return { ...product, instock: !product.instock };
-            }
-            return product;
-        });
-    }
+    // @Selector()
+    // static updateProductList(state: ProductStateModel): Product[] {
+    //   // return state.productList.map((product) => product.id === state.selectedProductId ? { ...product, } : product);
+    // }
 
     // 7. Actions
     @Action(LoadProducts)
     Loadproduct(ctx: StateContext<ProductStateModel>, action: LoadProducts){
      // to avoid recuring api call, we can check if the productList is empty or not.
         const state = ctx.getState();
+     
         const skip = (action.page -1) *action.limit;
-        if(state.productList.length > 0 && !action.forceReload) return;
+     
+        if(state.productList[action.page] && !action.forceReload) return;
         
         ctx.patchState({ loading: true });
         return this.prodcutService.getProducts(action.limit, skip).pipe(
             tap((response) =>{
                 ctx.patchState({
-                    productList:response.products,
+
+                    productList:{
+                        ... state.productList,
+                        [action.page]:response.products,
+                    } ,
+                    currentPage: action.page,
                     loading: false,
+
+                  
                 })
 
             })
@@ -130,20 +139,6 @@ export class ProductState {
         })
     }
 
-    @Action(UpdateProduct)
-    updateProduct(ctx: StateContext<ProductStateModel>, action: UpdateProduct){
-
-        ctx.setState(
-            patch({
-                productList: updateItem<Product>(
-                    product => product.id === action.id,
-                    patch({
-                        instock: action.instock,
-                    })
-                )
-            })
-        )
-    }
 
 
 }

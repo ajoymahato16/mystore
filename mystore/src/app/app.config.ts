@@ -12,10 +12,11 @@ import { provideStore } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsStoragePluginModule, StorageOption } from '@ngxs/storage-plugin'; // Import NGXS Storage Plugin
 import { UserState } from './state/user.state'; // Your UserState to persist
+import { ProductState } from './state/state.product';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideStore([UserState]),
+    provideStore([UserState, ProductState]), // Register your states here
 
     importProvidersFrom(
       ReactiveFormsModule,
