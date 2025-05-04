@@ -6,7 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { State, Store } from '@ngxs/store';
 import { ProductState } from '../../../state/state.product'; // Import the Product interface from the state file
-import e from 'express';
+import { CartState, addTocart } from '../../../state/state.cart'; // Import the CartState for cart-related operations
+import { wishlistState, addToWishList } from '../../../state/state.wishlist'; // Import the WishlistState for wishlist-related operations
 
 @Component({
   selector: 'app-product.details',
@@ -39,8 +40,6 @@ export class ProductDetailsComponent implements OnInit {
      const product_id = this.routes.snapshot.params['id']; // Get the product ID from the route parameters
       this.product = this.store.selectSnapshot(ProductState.getProductList).find((product) => product.id == product_id); // Find the product in the state using the ID
       this.selectedImage = this.product.images[0];
-      // Check if the product is found and log its details
-      console.log('Product found:', this.product);
       this.strokeprice = this.getPricewithDiscount(this.product.price, this.product.discountPercentage);
   }
 
@@ -53,22 +52,24 @@ export class ProductDetailsComponent implements OnInit {
 
     validateInput()
     {
-        if(this.quntity > this.product.stock)
+        if(this.quntity >= this.product.stock)
         {
           
-          console.log('out of stock',this.quntityerror);
 
         }else{
           
-          console.log('In Stock',this.quntityerror);
       }
     }
 
-    addToCart()
+    addToCart(product:any)
     {
-      
+      this.store.dispatch( new addTocart([product])); // Dispatch the action to add the product to the cart
+    
     }
 
-
+    addTowishlist(product:any)
+    {
+      this.store.dispatch( new addToWishList([product])); // Dispatch the action to add the product to the wishlist
+    }
 
 }

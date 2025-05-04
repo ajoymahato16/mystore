@@ -1,0 +1,30 @@
+<div class="flex flex-col gap-4 p-4">
+    <h3>My shopping cart</h3>
+    <div class="flex flex-col gap-4">
+      <div class="flex items">
+        <div class="flex-1">
+          <p class="text-sm text-gray-500">You have {{ cartItems.length }} items in your cart</p>
+           <ng-container *ngIf="cartItems.length > 0; else emptyCart">
+                <div class="divide-y divide-gray-200">
+                <div *ngFor="let item of cartItems" class="flex items-center justify-between py-2">
+                        <div class="flex items-center gap-2">
+                            <img [src]="item.image" alt="{{ item.name }}" class="h-12 w-12 rounded-md" />
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">{{ item.name }}</p>
+                                <p class="text-sm text-gray-500">Quantity: {{ item.quantity }}</p>
+                            </div>
+                            <div class="">
+                                <p class="text-sm text-gray-500">{{ item.price | currency }}</p>
+                            </div>
+                        </div>
+                        <button (click)="removeFromCart(item)" class="text-sm text-red-500">Remove</button>
+                    </div>
+                </div>
+           </ng-container> 
+            <ng-template #emptyCart>
+                <p class="text-sm text-gray-500">Your cart is empty.</p>
+            </ng-template>
+        </div>
+        <button (click)="clearCart()" class="text-sm text-red-500">Clear Cart</button>
+    </div>
+</div>

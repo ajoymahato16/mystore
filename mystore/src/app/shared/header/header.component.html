@@ -24,18 +24,27 @@
             >Contact</a>
 
             <div class="h-6 w-px bg-gray-950/10"></div>
-                    {{isloggedin$ | async}}
-                    <ng-container  *ngIf="isloggedin$ | async as loggedIn">
-                        <a class="text-sm/6 text-gray-950" routerLink="/profile">Profile</a>
-                        <a class="text-sm/6 text-gray-950" (click)="loggedout()">Logout</a>    
-                    </ng-container>
-                    <ng-container  *ngIf="!(isloggedin$ | async)">
-                        <a class="text-sm/6 text-gray-950"  data-modal-target="authentication-modal" (click)="showModal()" data-modal-toggle="authentication-modal">Sign in</a>
-                    </ng-container>
+                <a class="text-sm/6 text-gray-950" (click)="toggleCart()">Cart</a>
+                <a class="text-sm/6 text-gray-950" (click)="toggleWishlist()">Wishlist</a>   
+                <div #cartPopup class="absolute flex-1 overflow-y-auto  bg-white divide-y right-0 top-15 divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-70 hidden">
+                    <app-cart-popup></app-cart-popup>
+                </div>
+                <div #wishlistPopUp class="absolute flex-1 overflow-y-auto px-4 py-6 sm:px-6 hidden">
+                    <app-wishlist-pop-up></app-wishlist-pop-up>
+                </div>
+
+                <ng-container  *ngIf="isloggedin$ | async as loggedIn">
+                    <a class="text-sm/6 text-gray-950" routerLink="/profile">Profile</a>
+                    <a class="text-sm/6 text-gray-950" (click)="loggedout()">Logout</a>    
+                </ng-container>
+                <ng-container  *ngIf="!(isloggedin$ | async)">
+                    <a class="text-sm/6 text-gray-950"  data-modal-target="authentication-modal" (click)="showModal()" data-modal-toggle="authentication-modal">Sign in</a>
+                </ng-container>
             
     </div>
     
 </header>
+
 <div #authenticationModal tabindex="-1" class="overflow-y-auto dark:bg-gray-700 overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full  hidden">
     <div class="relative p-4 w-full max-w-md max-h-full">
         <app-login (closePopup)="hideLoginPopup()" (loginSuccess)="onLoginSuccess()"></app-login>

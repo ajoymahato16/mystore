@@ -13,10 +13,12 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsStoragePluginModule, StorageOption } from '@ngxs/storage-plugin'; // Import NGXS Storage Plugin
 import { UserState } from './state/user.state'; // Your UserState to persist
 import { ProductState } from './state/state.product';
+import { CartState } from './state/state.cart'; // Your CartState to persist
+import { wishlistState } from './state/state.wishlist'; // Your WishlistState to persist
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideStore([UserState, ProductState]), // Register your states here
+    provideStore([UserState, ProductState, CartState, wishlistState]), // Register your states here
 
     importProvidersFrom(
       ReactiveFormsModule,

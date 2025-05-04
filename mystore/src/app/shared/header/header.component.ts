@@ -1,6 +1,8 @@
-import { AfterViewInit, Component, ElementRef,  ViewChild, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef,  ViewChild, ChangeDetectionStrategy, OnInit, viewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
+import { CartPopupComponent } from '../../pages/poup/cart-popup/cart-popup.component';
+import { WishlistPopUpComponent } from '../../pages/poup/wishlist-pop-up/wishlist-pop-up.component';
 import { CommonModule } from '@angular/common';
 import { authService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
@@ -10,7 +12,7 @@ import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'app-header',
-  imports: [LoginComponent, RouterModule, CommonModule],
+  imports: [LoginComponent, WishlistPopUpComponent, CartPopupComponent, RouterModule, CommonModule],
   standalone: true,
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
@@ -20,6 +22,9 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild('authenticationModal') authenticationModalRef!: ElementRef;
   @ViewChild('loginModalOverlay') loginModalOverlay!: ElementRef;
+
+  @ViewChild('cartPopup') cartPopup !: ElementRef;
+  @ViewChild('wishlistPopUp') wishlistPopUp !: ElementRef;
 
   isloggedin$!: Observable<boolean>;
 
@@ -40,6 +45,15 @@ export class HeaderComponent implements OnInit {
   ngAfterViewInit(): void {
     
   
+  }
+  toggleCart(){
+    this.cartPopup.nativeElement.classList.toggle('hidden');
+    this.wishlistPopUp.nativeElement.classList.add('hidden');
+  }
+  toggleWishlist()
+  {
+    this.wishlistPopUp.nativeElement.classList.toggle('hidden');
+    this.cartPopup.nativeElement.classList.add('hidden');
   }
 
   // Add any additional methods or properties needed for the header component
