@@ -9,12 +9,16 @@
 
           <div class="flex gap-4 py-4 justify-center overflow-x-auto">
 
-            <ng-container *ngFor="let image of product.images">
-                <img src="{{image}}" alt="Thumbnail 1"
-                class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
-                [class.active]="selectedImage === image"
-                (click)="selectedImage = image; mainImage.src = image">
-            </ng-container>
+           @if(product.images)
+           {
+              <ng-container  *ngFor="let image of product.images">
+                  <img src="{{image}}" alt="Thumbnail 1"
+                  class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
+                  [class.active]="selectedImage === image"
+                  (click)="selectedImage = image; mainImage.src = image">
+              </ng-container>
+           }
+          
             
           </div>
 

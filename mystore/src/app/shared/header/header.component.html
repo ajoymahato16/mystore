@@ -24,9 +24,9 @@
             >Contact</a>
 
             <div class="h-6 w-px bg-gray-950/10"></div>
-                <a class="text-sm/6 text-gray-950" (click)="toggleCart()">Cart</a>
-                <a class="text-sm/6 text-gray-950" (click)="toggleWishlist()">Wishlist</a>   
-                <div #cartPopup class="absolute flex-1 overflow-y-auto  bg-white divide-y right-0 top-15 divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-70 hidden">
+                <a class="text-sm/6 text-gray-950 hover:cursor-pointer" (click)="toggleCart()">Cart</a>
+                <a class="text-sm/6 text-gray-950 hover:cursor-pointer" (click)="toggleWishlist()">Wishlist</a>   
+                <div #cartPopup class="absolute flex-1 overflow-y-auto  bg-white divide-y right-5 top-15 divide-gray-100 rounded-lg shadow-sm w-150 dark:bg-gray-70 hidden">
                     <app-cart-popup></app-cart-popup>
                 </div>
                 <div #wishlistPopUp class="absolute flex-1 overflow-y-auto px-4 py-6 sm:px-6 hidden">

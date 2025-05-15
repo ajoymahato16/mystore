@@ -20,10 +20,9 @@ import { wishlistState, addToWishList } from '../../../state/state.wishlist'; //
 export class ProductDetailsComponent implements OnInit {
   // This component is responsible for displaying product details
     selectedImage: string = ''; // Variable to hold the selected image URL
-    product:any = {}; // Initialize an empty product object to hold product details
+    product:any = []; // Initialize an empty product object to hold product details
     strokeprice:number = 0; // Variable to hold the price after discount
     quntity: number = 1; // Variable to hold the quantity of the product
-    quntityerror:boolean = false;
 
 
   constructor(private routes:ActivatedRoute, private store: Store) { } // Constructor for the component, currently empty
@@ -36,10 +35,10 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-
-     const product_id = this.routes.snapshot.params['id']; // Get the product ID from the route parameters
-      this.product = this.store.selectSnapshot(ProductState.getProductList).find((product) => product.id == product_id); // Find the product in the state using the ID
-      this.selectedImage = this.product.images[0];
+     const product_id = +this.routes.snapshot.params['id']; // Get the product ID from the route parameters
+      const productList = this.store.selectSnapshot(ProductState.getProductList); // Find the product in the state using the ID
+      this.product = productList.find((product)=> product.id === product_id);
+      this.selectedImage = this.product.images?.[0] || '';
       this.strokeprice = this.getPricewithDiscount(this.product.price, this.product.discountPercentage);
   }
 
@@ -55,7 +54,6 @@ export class ProductDetailsComponent implements OnInit {
         if(this.quntity >= this.product.stock)
         {
           
-
         }else{
           
       }
@@ -63,13 +61,16 @@ export class ProductDetailsComponent implements OnInit {
 
     addToCart(product:any)
     {
-      this.store.dispatch( new addTocart([product])); // Dispatch the action to add the product to the cart
+    //  console.log("Add to cart",this.product);
+    //  console.log("Add to cart",this.product.id);
+      this.store.dispatch( new addTocart(this.product)); // Dispatch the action to add the product to the cart
     
     }
 
     addTowishlist(product:any)
     {
-      this.store.dispatch( new addToWishList([product])); // Dispatch the action to add the product to the wishlist
+     // console.log("Add to wishlist",this.product, this.product.id);
+      this.store.dispatch( new addToWishList(this.product)); // Dispatch the action to add the product to the wishlist
     }
 
 }

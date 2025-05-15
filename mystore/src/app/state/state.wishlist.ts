@@ -16,7 +16,7 @@ export interface wilisthStateModel
 
 export class addToWishList{
     static readonly type = '[wishlist] add to wishlist';
-    constructor(public payload:wishlistItem[]){}
+    constructor(public payload:wishlistItem){}
 }
 export class removeFromWishList{
     static readonly type = '[wishlist] remove from wishlist';
@@ -50,11 +50,11 @@ export class wishlistState{
     @Action(addToWishList)
     addTowishlist({getState, patchState}: StateContext<wilisthStateModel>, {payload}:addToWishList){
         const state = getState();
-        const existingItem = state.items.find((item)=> item.id === payload[0].id);
+        const existingItem = state.items.find((item)=> item.id === payload.id);
         if(!existingItem){
             patchState({
-                items:[...state.items, ...payload],
-                total:state.total + payload[0].quantity
+                items:[...state.items, payload],
+                total:state.total + payload.quantity
             })
         }
     }

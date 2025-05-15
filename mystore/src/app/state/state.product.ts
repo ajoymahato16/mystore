@@ -15,10 +15,12 @@ export interface Product {
     id: number;
     title: string;
     price: number;
-    images: string[];
+    images?: string[] | null;
     description: string;
     thumbnail: string;
     instock: boolean;
+    discountPercentage: number;
+    rating: number;
 }
 //////////////////
 // 2. Product State Model

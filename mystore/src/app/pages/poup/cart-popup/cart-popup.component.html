@@ -1,30 +1,38 @@
 <div class="flex flex-col gap-4 p-4">
-    <h3>My shopping cart</h3>
-    <div class="flex flex-col gap-4">
-      <div class="flex items">
+    <h3  class="bg-gray-50 py-2 px-5 text-2xl text-black font-bold">My shopping cart</h3>
+    <div class="flex flex-col">
         <div class="flex-1">
-          <p class="text-sm text-gray-500">You have {{ cartItems.length }} items in your cart</p>
-           <ng-container *ngIf="cartItems.length > 0; else emptyCart">
-                <div class="divide-y divide-gray-200">
-                <div *ngFor="let item of cartItems" class="flex items-center justify-between py-2">
-                        <div class="flex items-center gap-2">
-                            <img [src]="item.image" alt="{{ item.name }}" class="h-12 w-12 rounded-md" />
-                            <div>
-                                <p class="text-sm font-medium text-gray-900">{{ item.name }}</p>
-                                <p class="text-sm text-gray-500">Quantity: {{ item.quantity }}</p>
+           <ng-container *ngIf="cartItems$ | async as cartItems">    
+                    <ng-container *ngIf="cartItems.length > 0; else emptyCart">
+                    <div class="divide-y w-full divide-gray-200">
+                        <p class=" text-gray-500 items-center p-2 text-center text-xl border-b-2 border-gray-400">You have {{totalItems$ | async }} items in your cart</p>
+                        <div *ngFor="let item of cartItems" class="flex flex-row justify-between py-2">
+                            
+                            <div class="flex flex-row justify-between items-center">
+                                <img [src]="item.thumbnail" alt="{{ item.title }}" class="h-12 w-12 rounded-md" />
+                                <div class="grid grid-cols-2 text-left gap-2 ">
+                                    <p class="text-sm text-left font-medium text-gray-900 pr-2 text-wrap max-w-xs">{{ item.title }}</p>
+                                    <p class="text-sm text-gray-500">Quantity: {{ item.quantity }}</p>
+                                </div>
+                                <div class="text-left px-2">
+                                    <p class="text-sm text-gray-500">Price : {{ item.price | currency }}</p>
+                                </div>
                             </div>
-                            <div class="">
-                                <p class="text-sm text-gray-500">{{ item.price | currency }}</p>
-                            </div>
+
+                            <button (click)="removeItemFromCart(item.id)" class="text-xs bg-red-700 rounded-md my-auto px-4 py-1.5 font-semibold items-center text-white ">Remove</button>
                         </div>
-                        <button (click)="removeFromCart(item)" class="text-sm text-red-500">Remove</button>
+                        <p class=" text-gray-500 items-center p-2 text-right text-md border-t-1 border-gray-400">Total Price : {{totalPrice$ | async}} </p>
                     </div>
-                </div>
-           </ng-container> 
-            <ng-template #emptyCart>
-                <p class="text-sm text-gray-500">Your cart is empty.</p>
-            </ng-template>
+                    <div class="flex border-t-2 border-amber-200 pt-4">
+                        <button (click)="clearCart()" class="text-sm bg-red-700 rounded-lg mx-auto px-4 py-1.5 font-bold text-white ">Clear Cart</button>
+                    </div>
+                </ng-container> 
+                <ng-template #emptyCart>
+                    <p class="text-sm text-gray-500">Your cart is empty.</p>
+                </ng-template>            
+           </ng-container>
+
         </div>
-        <button (click)="clearCart()" class="text-sm text-red-500">Clear Cart</button>
+     
     </div>
 </div>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Store } from '@ngxs/store';
-import { CartState } from '../../../state/state.cart'; // Import the CartState for cart-related operations
+import { Selector,Store, Select } from '@ngxs/store';
+import { CartItem, CartState, CartStateModel, clearCart, removeFromCart } from '../../../state/state.cart'; // Import the CartState for cart-related operations
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-cart-popup',
@@ -10,26 +11,33 @@ import { CartState } from '../../../state/state.cart'; // Import the CartState f
   styleUrl: './cart-popup.component.css'
 })
 export class CartPopupComponent implements OnInit {
+  cartItems$!: Observable<CartItem[]>
+  
+    totalItems$!: Observable<number>;
+    totalPrice$!: Observable<number>;
 
-  cartItems: any = []; // Array to hold the items in the cart
-  totalPrice: number = 0; // Variable to hold the total price of the cart items
+constructor(private store: Store) {
+}
+  ngOnInit() {
+    
+      this.cartItems$ = this.store.select(CartState.items);
+    
+      this.cartItems$.subscribe((items) => {    
+        console.log('quantity:', items[0].quantity);
+        return items;
+      });
 
-
-  constructor(private store: Store){}
-
- ngOnInit() {
-  this.cartItems = this.store.selectSnapshot(CartState.items)
-  console.log('cart items:', this.cartItems); // Log the cart items to the console
-  this.totalPrice = this.store.selectSnapshot(CartState.totalPrice); // Get the total price from the CartState
-   
- }
-
-  removeFromCart(product:any) {
-    // Logic to remove the product from the cart
+      this.totalItems$ = this.store.select(CartState.totalItems);
+      this.totalPrice$ = this.store.select(CartState.totalPrice);
   }
 
-  clearCart()
-  {
 
-  }
+    removeItemFromCart(id:number){
+        this.store.dispatch(new removeFromCart(id));
+    }
+
+    clearCart()
+    {
+      this.store.dispatch(new clearCart()); // Dispatch an action to clear the cart
+    }
 }
