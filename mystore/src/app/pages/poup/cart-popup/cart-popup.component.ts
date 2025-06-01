@@ -16,20 +16,21 @@ export class CartPopupComponent implements OnInit {
     totalItems$!: Observable<number>;
     totalPrice$!: Observable<number>;
 
-constructor(private store: Store) {
-}
-  ngOnInit() {
-    
-      this.cartItems$ = this.store.select(CartState.items);
-    
-      this.cartItems$.subscribe((items) => {    
-        console.log('quantity:', items[0].quantity);
-        return items;
-      });
+    constructor(private store: Store) {
+    }
+      
+    ngOnInit() {
+      
+        this.cartItems$ = this.store.select(CartState.items);
+      
+        this.cartItems$.subscribe((items) => {    
+        // console.log('quantity:', items[0].quantity);
+          return items;
+        });
 
-      this.totalItems$ = this.store.select(CartState.totalItems);
-      this.totalPrice$ = this.store.select(CartState.totalPrice);
-  }
+        this.totalItems$ = this.store.select(CartState.totalItems);
+        this.totalPrice$ = this.store.select(CartState.totalPrice);
+    }
 
 
     removeItemFromCart(id:number){

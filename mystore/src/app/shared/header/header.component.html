@@ -1,53 +1,94 @@
-<header
-    class="line-b fixed inset-x-0 top-0 z-20 flex h-14 items-center justify-between bg-white px-4 after:-bottom-px sm:px-6">
-  
-    <div class="@container flex flex-1 justify-start pl-8">
-        <a 
-         class="shrink-0 flex flex-nowrap items-center gap-2 rounded-full px-3 py-2 text-xs/4 whitespace-nowrap ring ring-gray-950/8 hover:bg-gray-950/2 hover:ring-gray-950/10 @max-[22rem]:hidden"
-         aria-label="Home" 
-         routerLink="/" routerLinkActive="router-link-active" >
-            site_logo
-         </a>
-           
-        </div>
-    <div class="flex items-center gap-5 max-md:hidden lg:gap-6">
-      
-            <a routerLinkActive="rounded-full px-2.5 py-0.5 bg-gray-950 font-medium text-white" 
-            class="  text-sm/6 text-gray-950"  routerLink="/about">About</a>
+ <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f4f2f1] px-10 py-3">
+          <div class="flex items-center gap-8">
+            <div class="flex items-center gap-4 text-[#161412]">
+              <div class="size-4">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </div>
+              <h2 class="text-[#161412] text-lg font-bold leading-tight tracking-[-0.015em]">ShopSmart</h2>
+            </div>
+            <div class="flex items-center gap-9">
+              <a class="text-[#161412] text-sm font-medium leading-normal" href="#">Home</a> 
+              <a class="text-[#161412] text-sm font-medium leading-normal" routerLink="/about">About</a>
 
-            <a routerLinkActive="rounded-full px-2.5 py-0.5 bg-gray-950 font-medium text-white" 
-            class=" text-sm/6 text-gray-950" routerLink="/product">Product</a>
+              <a class="text-[#161412] text-sm font-medium leading-normal" routerLink="/product">Product</a>
 
-            <a class="text-sm/6 text-gray-950"
-            routerLink="contact"
-            routerLinkActive="rounded-full px-2.5 py-0.5 bg-gray-950 font-medium text-white"
-            >Contact</a>
+              <a class="text-[#161412] text-sm font-medium leading-normal" href="#" >Contact</a>
 
-            <div class="h-6 w-px bg-gray-950/10"></div>
-                <a class="text-sm/6 text-gray-950 hover:cursor-pointer" (click)="toggleCart()">Cart</a>
-                <a class="text-sm/6 text-gray-950 hover:cursor-pointer" (click)="toggleWishlist()">Wishlist</a>   
-                <div #cartPopup class="absolute flex-1 overflow-y-auto  bg-white divide-y right-5 top-15 divide-gray-100 rounded-lg shadow-sm w-150 dark:bg-gray-70 hidden">
+                          
+            </div>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <label class="flex flex-col min-w-40 !h-10 max-w-64">
+              <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
+                <div
+                  class="text-[#81726a] flex border-none bg-[#f4f2f1] items-center justify-center pl-4 rounded-l-xl border-r-0"
+                  data-icon="MagnifyingGlass"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                      d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                    ></path>
+                  </svg>
+                </div>
+                <input
+                  placeholder="Search"
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#161412] focus:outline-0 focus:ring-0 border-none bg-[#f4f2f1] focus:border-none h-full placeholder:text-[#81726a] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+                  value=""
+                />
+              </div>
+            </label>
+            <div class="flex gap-2">
+              <button
+                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f4f2f1] text-[#161412] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+                (click)="toggleWishlist()">
+                <div class="text-[#161412]" data-icon="Heart" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                      d="M178,32c-20.65,0-38.73,8.88-50,23.89C116.73,40.88,98.65,32,78,32A62.07,62.07,0,0,0,16,94c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,220.66,240,164,240,94A62.07,62.07,0,0,0,178,32ZM128,206.8C109.74,196.16,32,147.69,32,94A46.06,46.06,0,0,1,78,48c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,147.61,146.24,196.15,128,206.8Z"
+                    ></path>
+                  </svg>
+                </div>
+              </button>
+              <button
+                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f4f2f1] text-[#161412] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+            (click)="toggleCart()" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                      d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,160H40V56H216V200ZM176,88a48,48,0,0,1-96,0,8,8,0,0,1,16,0,32,32,0,0,0,64,0,8,8,0,0,1,16,0Z"
+                    ></path>
+                  </svg>
+              </button>
+               <div #cartPopup class="absolute flex-1 overflow-y-auto  bg-white divide-y right-5 top-15 divide-gray-100 rounded-lg shadow-sm w-150 dark:bg-gray-70 hidden">
                     <app-cart-popup></app-cart-popup>
                 </div>
-                <div #wishlistPopUp class="absolute flex-1 overflow-y-auto px-4 py-6 sm:px-6 hidden">
+                <div #wishlistPopUp class="absolute flex-1 overflow-y-auto  bg-white divide-y right-5 top-15 divide-gray-100 rounded-lg shadow-sm w-150 dark:bg-gray-70 hidden">
                     <app-wishlist-pop-up></app-wishlist-pop-up>
                 </div>
 
-                <ng-container  *ngIf="isloggedin$ | async as loggedIn">
-                    <a class="text-sm/6 text-gray-950" routerLink="/profile">Profile</a>
+            </div>
+             <ng-container  *ngIf="isloggedin$ | async as loggedIn">
+                    <a class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" routerLink="/profile" 
+                    style='background-image: url("https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png");'>Profile</a>
                     <a class="text-sm/6 text-gray-950" (click)="loggedout()">Logout</a>    
                 </ng-container>
                 <ng-container  *ngIf="!(isloggedin$ | async)">
-                    <a class="text-sm/6 text-gray-950"  data-modal-target="authentication-modal" (click)="showModal()" data-modal-toggle="authentication-modal">Sign in</a>
+                    <a class="text-sm/6 flex flex-row text-gray-950 items-center align-middle hover:cursor-pointer "  data-modal-target="authentication-modal" (click)="showModal()" data-modal-toggle="authentication-modal">Sign in</a>
                 </ng-container>
-            
-    </div>
-    
-</header>
 
-<div #authenticationModal tabindex="-1" class="overflow-y-auto dark:bg-gray-700 overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full  hidden">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-        <app-login (closePopup)="hideLoginPopup()" (loginSuccess)="onLoginSuccess()"></app-login>
+           
+           
+          </div>
+        </header>
+    <div #authenticationModal tabindex="-1" class="overflow-y-auto dark:bg-gray-700 overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full  hidden">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <app-login (closePopup)="hideLoginPopup()" (loginSuccess)="onLoginSuccess()"></app-login>
+        </div>
     </div>
-</div>
-<div #loginModalOverlay class="bg-gray-900/50 dark:bg-gray-900/80  inset-0 z-40  fixed hidden"></div>
+    <div #loginModalOverlay class="bg-gray-900/50 dark:bg-gray-900/80  inset-0 z-40  fixed hidden"></div>

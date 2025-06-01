@@ -1,14 +1,15 @@
 import { inject, Injectable } from "@angular/core";
 import { State, StateContext, Action, Selector } from "@ngxs/store";
+import { tap } from "rxjs";
 
 export interface wishlistItem {
     id:number;
-    name:string;
+    title:string;
     price:number;
-    image:string;
+    thumbnail:string;
     quantity:number;
 }
-export interface wilisthStateModel
+export interface wishlistStateModel
 {
     items:wishlistItem[];
     total:number;
@@ -27,7 +28,7 @@ export class clearWishList{
     constructor(){}
 }
 
-@State<wilisthStateModel>({
+@State<wishlistStateModel>({
     name:'wishlist',
     defaults:{
         items:[],
@@ -39,23 +40,54 @@ export class clearWishList{
 export class wishlistState{
 
     @Selector()
-    static items(state: wilisthStateModel){
+    static items(state: wishlistStateModel){
         return state.items;
     }
+
+   @Selector()
+   static getwishlistItems(state: wishlistStateModel): wishlistItem[] {
+     return state.items;
+   }
+
+    
     @Selector()
-    static total(state: wilisthStateModel){
-        return state.items.reduce((total, item) => item.quantity + total, 0);
+    static totalItems(state: wishlistStateModel)
+    {
+        return state.items.reduce((total, item) =>  item.quantity + total, 0);
     }
 
-    @Action(addToWishList)
-    addTowishlist({getState, patchState}: StateContext<wilisthStateModel>, {payload}:addToWishList){
+     @Action(addToWishList)
+    addTowishlist({getState, patchState}: StateContext<wishlistStateModel>, {payload}:addToWishList){
+      //  console.log('payload', payload);
         const state = getState();
+        
         const existingItem = state.items.find((item)=> item.id === payload.id);
+
         if(!existingItem){
             patchState({
                 items:[...state.items, payload],
                 total:state.total + payload.quantity
+               
             })
         }
+        console.log('state', state);
     }
+
+    @Action(removeFromWishList)
+    removeFromWishlist({getState, patchState}: StateContext<wishlistStateModel>,{id}:removeFromWishList){
+        const state = getState();
+        patchState({
+            items: state.items.filter((item)=> item.id !==id)
+        })
+    }
+
+   
+    @Action(clearWishList)   
+    clearWishlist({patchState}: StateContext<wishlistStateModel>){
+        patchState({
+            items:[],
+            total:0,
+        })
+    }
+
 }

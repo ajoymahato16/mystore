@@ -1,4 +1,5 @@
 import { Component,OnInit } from '@angular/core';
+import { Meta,Title } from '@angular/platform-browser';
 import { Store } from '@ngxs/store';
 import { Product, LoadProducts, ProductState } from '../../state/state.product';
 import { CommonModule } from '@angular/common';
@@ -20,11 +21,16 @@ export class ProductComponent implements OnInit {
 
   limit = 10;
   page = 0;
-  constructor( private store: Store){
-
+  constructor( private store: Store, private titleService: Title, private metaService: Meta){
+  
   }
 
+
   ngOnInit(): void {
+    this.titleService.setTitle('MyStore - Products');
+    this.metaService.updateTag({ name: 'descrription', content:'Explore our wide range of products at MyStore!' });
+    this.metaService.updateTag({ name: 'keywords', content: 'products, ecommerce, online shopping, MyStore' });
+
     this.product$ = this.store.select(ProductState.getProductList);
     this.pageload(this.page);
     

@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { Component,OnInit, ViewChild, ElementRef, AfterViewInit, NgModule } from '@angular/core';
+import { Component,OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser'; // Import Meta and Title for SEO purposes
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router'; 
 import { Observable } from 'rxjs';
@@ -25,7 +26,7 @@ export class ProductDetailsComponent implements OnInit {
     quntity: number = 1; // Variable to hold the quantity of the product
 
 
-  constructor(private routes:ActivatedRoute, private store: Store) { } // Constructor for the component, currently empty
+  constructor(private routes:ActivatedRoute, private store: Store, private metaService: Meta, private titleService: Title) { } // Constructor for the component, currently empty
  
 
   @ViewChild('mainImage') mainImageElement!: ElementRef; // ViewChild to access the main image element in the template
@@ -35,6 +36,11 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+      this.titleService.setTitle('MyStore - Product Details'); // Set the page title for SEO
+      this.metaService.updateTag({ name: 'description', content: 'Explore the details of our products at MyStore!' }); // Update meta description for SEO
+      this.metaService.updateTag({ name: 'keywords', content: 'product details, ecommerce, online shopping, MyStore' }); // Update meta keywords for SEO
+
+      // Fetch the product ID from the route parameters and find the product in the state
      const product_id = +this.routes.snapshot.params['id']; // Get the product ID from the route parameters
       const productList = this.store.selectSnapshot(ProductState.getProductList); // Find the product in the state using the ID
       this.product = productList.find((product)=> product.id === product_id);
@@ -45,6 +51,7 @@ export class ProductDetailsComponent implements OnInit {
   roundRating(value: number): number {
     return Math.round(value);
   }
+  
   getPricewithDiscount(price: number, discount: number): number {
     return Math.round(price + (price * discount) / 100); // Calculate the price after applying the discount
   }
@@ -69,7 +76,7 @@ export class ProductDetailsComponent implements OnInit {
 
     addTowishlist(product:any)
     {
-     // console.log("Add to wishlist",this.product, this.product.id);
+     console.log("Add to wishlist",);
       this.store.dispatch( new addToWishList(this.product)); // Dispatch the action to add the product to the wishlist
     }
 

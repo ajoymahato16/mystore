@@ -1,1 +1,31 @@
-<p>wishlist-pop-up works!</p>
+<div class="flex flex-col gap-4 p-4">
+    <h3  class="bg-gray-50 py-2 px-5 text-2xl text-black font-bold">My Wish list</h3>
+    <div class="flex flex-col">
+        <div class="flex-1">
+           <ng-container *ngIf="wlItem$ | async as wishlist">    
+                    <ng-container *ngIf="wishlist.length > 0; else emptyCart">
+                    <div class="divide-y w-full divide-gray-200">
+                        <p class=" text-gray-500 items-center p-2 text-center text-xl border-b-2 border-gray-400">You have {{wishlist.length }} items in your Wish List</p>
+                        <div *ngFor="let item of wishlist" class="flex flex-row justify-between py-2">
+                            
+                            <div class="grid grid-cols-3 justify-between items-center  w-full">
+                                <img [src]="item.thumbnail" alt="{{ item.title }}" class="h-12 w-12 rounded-md" />
+                                <p class="text-sm text-left font-medium text-gray-900 pr-2 text-wrap max-w-xs">{{ item.title }}</p>
+                                <p class="text-sm text-gray-500">Price : {{ item.price | currency }}</p>
+                            </div>
+                            <button (click)="removeItemFromWishlist(item.id)" class="text-xs bg-red-700 rounded-md my-auto px-4 py-1.5 font-semibold items-center text-white ">Remove</button>
+                        </div>
+                    </div>
+                    <div class="flex border-t-2 border-amber-200 pt-4">
+                        <button (click)="clearWishlist()" class="text-sm bg-red-700 rounded-lg mx-auto px-4 py-1.5 font-bold text-white ">Clear Wishlist</button>
+                    </div>
+                </ng-container> 
+                <ng-template #emptyCart>
+                    <p class="text-sm text-center text-gray-500">Your Wish List is empty.</p>
+                </ng-template>            
+           </ng-container>
+
+        </div>
+     
+    </div>
+</div>
