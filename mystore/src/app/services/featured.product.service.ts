@@ -19,7 +19,9 @@ export interface featuredProduct {
 })
 
 export class FeaturedProductService {
+
     private getFeaturedProductUrl = 'https://dummyjson.com/products';
+    private categoryUrl = 'https://dummyjson.com/products/categories';
 
     constructor(private http: HttpClient) { }
 
@@ -31,8 +33,15 @@ export class FeaturedProductService {
         return this.http.get<featuredProduct>(`${this.getFeaturedProductUrl}/${id}`);
     }
     
-    searchProducts(query: string): Observable<featuredProduct[]> {
-        return this.http.get<featuredProduct[]>(`${this.getFeaturedProductUrl}/search/q=${query}`);
+    searchProducts(query: string): Observable<{products: featuredProduct[]}> {
+        return this.http.get<{products: featuredProduct[]}>(`${this.getFeaturedProductUrl}/search?q=${query}`);
     }
 
+    getCategories(): Observable<string[]>{
+        return this.http.get<string[]>(this.categoryUrl);
+    }
+
+    getproductByCategory(cateURL:string): Observable<{products: featuredProduct[]}> {
+        return this.http.get<{products: featuredProduct[]}>(cateURL);
+    }
 }
