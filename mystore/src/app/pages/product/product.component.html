@@ -15,10 +15,10 @@
      
         <div *ngIf="(product$ | async) as products">
 
-          <div class="flex flex-row items-end border-b-blue-900 border-b-2 pb-20">
-              <button (click)="prevPage()">Previous</button>
-                <span>Page {{ page }}</span>
-              <button (click)="nextPage()">Next</button>
+          <div class="flex flex-row w-full justify-end border-b-blue-900 border-b-2 pb-2">
+              <button class="bg-pink-600 rounded-lg text-white px-2 py-1 hover:cursor-pointer" (click)="prevPage()">Previous</button>
+                <span class="flex flex-row text-pink-500 items-center text-center  px-2 py-1 ">Page {{ page }}</span>
+              <button class="bg-pink-600 rounded-lg text-white px-2 py-1 hover:cursor-pointer" (click)="nextPage()">Next</button>
           </div>
            
           

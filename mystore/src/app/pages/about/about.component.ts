@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import{ Meta, Title } from '@angular/platform-browser'; // Import Meta and Title for SEO purposes
-
+import { AboutInfoComponent } from '../../components/about-info/about-info.component'; // Import the AboutInfoComponent
 @Component({
   selector: 'app-about',
-  imports: [],
+  imports: [AboutInfoComponent],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
 })

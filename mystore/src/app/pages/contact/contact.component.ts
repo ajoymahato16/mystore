@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser'; // Import Meta and Title for SEO purposes
+import { ContactFormComponent } from '../../components/contact-form/contact-form.component'; // Import the contact form component
+import { RouterModule } from '@angular/router'; // Import Router for navigation if needed
 
 @Component({
   selector: 'app-contact',
-  imports: [],
+  imports: [ ContactFormComponent, RouterModule ], // Include the contact form component in this component
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css'
 })

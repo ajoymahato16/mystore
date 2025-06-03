@@ -44,4 +44,9 @@ export class FeaturedProductService {
     getproductByCategory(cateURL:string): Observable<{products: featuredProduct[]}> {
         return this.http.get<{products: featuredProduct[]}>(cateURL);
     }
+
+    getproductById(id:number):Observable<featuredProduct[]>{
+        return this.http.get<featuredProduct[]>(`${this.getFeaturedProductUrl}/${id}`);
+    }
+
 }

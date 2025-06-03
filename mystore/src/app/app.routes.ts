@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
     {
         path:'',
+        pathMatch: 'full',
         loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
     },
     {
@@ -25,5 +26,8 @@ export const routes: Routes = [
         path: 'contact',
         loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent)
       },
-     
+     {
+      path: '**',
+      loadComponent: () => import('./pages/notfound/notfound.component').then(m => m.NotfoundComponent)
+     }
 ];

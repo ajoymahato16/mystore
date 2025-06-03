@@ -26,7 +26,12 @@ export class ProductDetailsComponent implements OnInit {
     quntity: number = 1; // Variable to hold the quantity of the product
 
 
-  constructor(private routes:ActivatedRoute, private store: Store, private metaService: Meta, private titleService: Title) { } // Constructor for the component, currently empty
+  constructor(
+              private routes:ActivatedRoute, 
+              private store: Store, 
+              private metaService: Meta, 
+              private titleService: Title
+            ) { } // Constructor for the component, currently empty
  
 
   @ViewChild('mainImage') mainImageElement!: ElementRef; // ViewChild to access the main image element in the template
